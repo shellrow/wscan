@@ -1,0 +1,21 @@
+[package]
+name = "wscan"
+version = "0.1.0"
+authors = ["shellrow <81893184+shellrow@users.noreply.github.com>"]
+edition = "2018"
+description = "Cross-platform web scan tool for content discovery and recon"
+repository = "https://github.com/shellrow/wscan"
+readme = "README.md"
+keywords = ["web","security","scan"]
+categories = ["network-programming"]
+license = "MIT"
+
+[dependencies]
+webscan = "0.1.0"
+clap = "2.33"
+tokio = { version = "0.2", features = ["full"] }
+regex = "1"
+chrono = "0.4"
+crossterm = "0.19"
+sudo = "0.6"
+dns-lookup = "1.0"
