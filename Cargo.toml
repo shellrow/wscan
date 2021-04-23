@@ -6,7 +6,7 @@ edition = "2018"
 description = "Cross-platform web scan tool for content discovery and recon"
 repository = "https://github.com/shellrow/wscan"
 readme = "README.md"
-keywords = ["web","security","scan"]
+keywords = ["web","security","scan","cli"]
 categories = ["network-programming"]
 license = "MIT"
 
