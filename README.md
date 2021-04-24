@@ -1,3 +1,4 @@
+[webscan-url]: https://github.com/shellrow/webscan
 # wscan
 Cross-platform web scan tool for content discovery and recon
 
@@ -22,3 +23,6 @@ OPTIONS:
     -m, --method <method>         Set HTTP request method for scanning
     -s, --save <file_path>        Save scan result to file - Ex: -s result.txt
 ```
+
+## About webscan (lib)
+Please check my [repository][webscan-url] for detail
