@@ -4,7 +4,9 @@ use std::time::Duration;
 pub struct UriOption{
     pub base_uri: String,
     pub use_wordlist: bool,
+    pub use_content: bool,
     pub wordlist_path: String,
+    pub content_path: String,
     pub request_method: String,
     pub timeout: Duration,
     pub save_path: String,
@@ -23,7 +25,9 @@ impl UriOption {
         let uri_option = UriOption {
             base_uri: String::new(),
             use_wordlist: false,
+            use_content: false,
             wordlist_path: String::new(),
+            content_path: String::new(),
             request_method: String::new(),
             timeout: Duration::from_millis(30000),
             save_path: String::new(),
@@ -41,6 +45,12 @@ impl UriOption {
         if !file_path.is_empty() {
             self.use_wordlist = true;
             self.wordlist_path = file_path;   
+        }
+    }
+    pub fn set_content_path(&mut self, content_path: String){
+        if !content_path.is_empty() {
+            self.use_content = true;
+            self.content_path = content_path;
         }
     }
     pub fn set_request_method(&mut self, method_name: String){
