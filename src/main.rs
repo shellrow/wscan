@@ -6,7 +6,7 @@ mod util;
 use clap::{App, AppSettings, Arg, ArgGroup};
 use std::io::{stdout, Write};
 use std::env;
-use std::fs::read_to_string;
+use std::fs::{read, read_to_string};
 use chrono::{Local, DateTime};
 use util::{option, validator, sys};
 use util::sys::{SPACE4};
@@ -44,6 +44,9 @@ async fn main() {
             opt.set_option(v.to_string());
             if let Some(w) = matches.value_of("word") {
                 opt.set_file_path(w.to_string());
+            }
+            if let Some(c) = matches.value_of("content") {
+                opt.set_content_path(c.to_string());
             }
             if let Some(m) = matches.value_of("method") {
                 opt.set_request_method(m.to_string());
@@ -114,6 +117,14 @@ fn get_app_settings<'a, 'b>() -> App<'a, 'b> {
             .value_name("file_path")
             .validator(validator::validate_filepath)
         )
+        .arg(Arg::with_name("content")
+            .help("Use content list - Ex: -c content.txt")
+            .short("c")
+            .long("content")
+            .takes_value(true)
+            .value_name("content_path")
+            .validator(validator::validate_filepath)
+        )
         .arg(Arg::with_name("method")
             .help("Set HTTP request method for scanning")
             .short("m")
@@ -173,6 +184,16 @@ async fn handle_uri_scan(opt: option::UriOption) {
         let word_list: Vec<&str> = text.trim().split("\n").collect();
         for word in word_list {
             uri_scanner.add_word(word.to_string());
+        }
+    }
+    if opt.use_content {
+        match read(opt.content_path.to_string()) {
+            Ok(ct) => {
+                let sep = b'\n';
+                ct.split(|b| b == &sep )
+                    .for_each(|c| uri_scanner.add_content(c.to_vec()));
+            },
+            Err(e) => {panic!("Could not open or find content file {} due to {}", opt.content_path.to_string(), e);}
         }
     }
     if !opt.request_method.is_empty() {

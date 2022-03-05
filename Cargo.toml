@@ -11,7 +11,7 @@ categories = ["network-programming"]
 license = "MIT"
 
 [dependencies]
-webscan = "0.1.0"
+webscan = {git = "https://github.com/sempervictus/webscan", branch = "feature/content_byte_matching"}
 clap = "2.33"
 tokio = { version = "0.2", features = ["full"] }
 regex = "1"
@@ -19,3 +19,13 @@ chrono = "0.4"
 crossterm = "0.19"
 sudo = "0.6"
 dns-lookup = "1.0"
+## Static build
+# Add openssl-sys as a direct dependency so it can be cross compiled to
+# x86_64-unknown-linux-musl using the "vendored" feature below
+openssl-sys = "*"
+
+[features]
+# Force openssl-sys to staticly link in the openssl library.
+# Necessary when cross compiling to x86_64-unknown-linux-musl.
+vendored = ["openssl-sys/vendored"]
+
